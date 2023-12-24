@@ -47,9 +47,9 @@ extern "C" {
 #define DFU_INTERFACE_STRING		 (uint8_t*) "cannode DFU interface"
 
 #define FDCAN_SJW_INIT				 1
-#define FDCAN_BRP_INIT				 10
-#define FDCAN_TS1_INIT				 13
-#define FDCAN_TS2_INIT				 2
+#define FDCAN_BRP_INIT				 16
+#define FDCAN_TS1_INIT				 16
+#define FDCAN_TS2_INIT				 19
 
 #define FDCAN_DATA_SJW_INIT			 1
 #define FDCAN_DATA_BRP_INIT			 2
@@ -57,7 +57,7 @@ extern "C" {
 #define FDCAN_DATA_TS2_INIT			 5
 
 #define FDCAN_CLOCK_DIV_INIT		 FDCAN_CLOCK_DIV1
-#define FDCAN_FRAME_FMT_INIT		 FDCAN_FRAME_FD_BRS
+#define FDCAN_FRAME_FMT_INIT		 FDCAN_FRAME_CLASSIC
 #define FDCAN_MODE_INIT				 FDCAN_MODE_NORMAL
 #define FDCAN_AUTO_RETX_INIT		 DISABLE
 #define FDCAN_AUTO_TX_PAUSE_INIT	 DISABLE
@@ -67,8 +67,8 @@ extern "C" {
 #define FDCAN_TX_FIFO_OPERATION_INIT FDCAN_TX_FIFO_OPERATION
 
 #define CAN_NUM_CHANNELS			 1
-#define CAN_CLOCK_SPEED				 80000000
-#define CANFD_FEATURE_ENABLED
+#define CAN_CLOCK_SPEED				 250000
+#define CANFD_FEATURE_ENABLED       DISABLE
 
 #define QUEUE_SIZE_HOST_TO_DEV	  32
 #define QUEUE_SIZE_DEV_TO_HOST	  32
@@ -76,12 +76,12 @@ extern "C" {
 void SystemClock_Config(void);
 void MX_GPIO_Init(void);
 
-#define FDCAN2_TX_Pin GPIO_PIN_14
-#define FDCAN2_TX_GPIO_Port GPIOB
-#define LED1_Pin GPIO_PIN_15
-#define LED1_GPIO_Port GPIOB
-#define FDCAN2_RX_Pin GPIO_PIN_10
-#define FDCAN2_RX_GPIO_Port GPIOA
+#define FDCAN2_TX_LED_Pin GPIO_PIN_14
+#define FDCAN2_TX_LED_GPIO_Port GPIOB
+#define BUS_STATE_Pin GPIO_PIN_15
+#define BUS_STATE_GPIO_Port GPIOB
+#define FDCAN2_RX_LED_Pin GPIO_PIN_10
+#define FDCAN2_RX_LED_GPIO_Port GPIOA
 
 #ifdef __cplusplus
 }

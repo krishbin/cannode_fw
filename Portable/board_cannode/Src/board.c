@@ -97,24 +97,25 @@ void MX_GPIO_Init(void)
   __HAL_RCC_GPIOA_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, FDCAN2_TX_Pin|LED1_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, FDCAN2_TX_LED_Pin|BUS_STATE_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(FDCAN2_RX_GPIO_Port, FDCAN2_RX_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(FDCAN2_RX_LED_GPIO_Port, FDCAN2_RX_LED_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pin : FDCAN2_TX_Pin */
-  GPIO_InitStruct.Pin = FDCAN2_TX_Pin|LED1_Pin;
+  /*Configure GPIO pins : FDCAN2_TX_LED_Pin BUS_STATE_Pin */
+  GPIO_InitStruct.Pin = FDCAN2_TX_LED_Pin|BUS_STATE_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(FDCAN2_TX_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : FDCAN2_RX_Pin */
-  GPIO_InitStruct.Pin = FDCAN2_RX_Pin;
+  /*Configure GPIO pin : FDCAN2_RX_LED_Pin */
+  GPIO_InitStruct.Pin = FDCAN2_RX_LED_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(FDCAN2_RX_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(FDCAN2_RX_LED_GPIO_Port, &GPIO_InitStruct);
+
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
 }
@@ -124,16 +125,16 @@ void main_init_cb(void)
 	/* carry over the LED blink from original firmware */
 	for (uint8_t i=0; i<10; i++)
 	{
-		HAL_GPIO_TogglePin(FDCAN2_RX_GPIO_Port, FDCAN2_RX_Pin);
+		HAL_GPIO_TogglePin(FDCAN2_RX_LED_GPIO_Port, FDCAN2_RX_LED_Pin);
 		HAL_Delay(50);
-		HAL_GPIO_TogglePin(FDCAN2_TX_GPIO_Port, FDCAN2_TX_Pin);
+		HAL_GPIO_TogglePin(FDCAN2_TX_LED_GPIO_Port, FDCAN2_TX_LED_Pin);
 	}
 
 	hGS_CAN.channels[0] = &hfdcan2;
 	can_init(hGS_CAN.channels[0], FDCAN2);
-	led_init(&hled1, FDCAN2_RX_GPIO_Port, FDCAN2_RX_Pin, LED_MODE_ACTIVE,	  LED_ACTIVE_HIGH);
-	led_init(&hled2, FDCAN2_TX_GPIO_Port, FDCAN2_TX_Pin, LED_MODE_INACTIVE, LED_ACTIVE_HIGH);
-	led_init(&hled3, LED1_GPIO_Port, LED1_Pin, LED_MODE_INACTIVE, LED_ACTIVE_HIGH);
+	led_init(&hled1, FDCAN2_RX_LED_GPIO_Port, FDCAN2_RX_LED_Pin, LED_MODE_ACTIVE,	  LED_ACTIVE_HIGH);
+	led_init(&hled2, FDCAN2_TX_LED_GPIO_Port, FDCAN2_TX_LED_Pin, LED_MODE_INACTIVE, LED_ACTIVE_HIGH);
+	led_init(&hled3, BUS_STATE_GPIO_Port, BUS_STATE_Pin, LED_MODE_INACTIVE, LED_ACTIVE_HIGH);
 }
 
 void main_task_cb(void)
